@@ -1,6 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from .schemas.predict import PredictionInput
+from .crud.predict import predict_arrival_time
+
 app = FastAPI()
 
 origins = ['http://localhost:8000']
@@ -20,3 +23,11 @@ def read_root():
         "api_version": "1.0.0",
         "message": "Welcome to the Bus Arrival Prediction Model API"
     }
+
+@app.post("/predict")
+def predict_time_to_arrival(input: PredictionInput):
+    try:
+        prediction = predict_arrival_time(input)
+        return {"prediction": prediction}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
