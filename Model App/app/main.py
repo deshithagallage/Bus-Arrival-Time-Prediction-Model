@@ -6,7 +6,7 @@ from .crud.predict import predict_arrival_time
 
 app = FastAPI()
 
-origins = ['http://localhost:8000']
+origins = ['http://localhost:8000', 'https://bus-arrival-time-prediction-backend.onrender.com']
 
 app.add_middleware(
     CORSMiddleware,
