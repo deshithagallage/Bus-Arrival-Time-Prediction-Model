@@ -1,12 +1,17 @@
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 from .schemas.predict import PredictionInput
 from .crud.predict import predict_arrival_time
 
+# Load environment variables
+load_dotenv()
+
 app = FastAPI()
 
-origins = ['http://localhost:8000', 'https://bus-arrival-time-prediction-backend.onrender.com']
+origins = os.getenv('CORS_ORIGINS').split(',')
 
 app.add_middleware(
     CORSMiddleware,
